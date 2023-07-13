@@ -10,12 +10,13 @@
     </div>
     <div>
       <input type="radio" :value="3" v-model="selected" />
-      <label> undefined</label>
+      <label> namespace chat</label>
     </div>
   </div>
   <body>
     <WS v-if="selected == 1" />
     <SIO v-if="selected == 2" />
+    <SIONS v-if="selected == 3" />
     
   </body>
 </template>
@@ -24,8 +25,9 @@
 import { ref, onUpdated } from 'vue'
 import WS from '@/components/connect/WebSocket.vue'
 import SIO from '@/components/connect/SocketIO.vue'
+import SIONS from '@/components/connect/SocketIONamespace.vue'
 
-const selected = ref(2)
+const selected = ref(3)
 console.log(selected)
 
 onUpdated(() => {
