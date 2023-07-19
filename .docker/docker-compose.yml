@@ -1,0 +1,72 @@
+version: "3"
+
+services:
+  frontend:
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+      target: development
+    image: test-front-dev
+    container_name: test-front-dev
+    environment:
+      VUE_APP_SERVER_URL: ${VUE_APP_SERVER_URL:-http://localhost:3001}
+    volumes:
+      - ../frontend/src:/app/src
+    networks:
+      - vue_nest_socket
+    depends_on:
+      - backend
+    expose:
+      - 5173
+    ports:
+      - 5173:5173
+  backend:
+    build:
+      context: backend
+      dockerfile: Dockerfile
+      target: development
+    image: test-back-dev
+    container_name: test-back-dev
+    env_file:
+      - ../backend/.env
+    volumes:
+      - ../backend/src:/app/src
+      - uploads_volumes:/app/uploads
+    networks:
+      - vue_nest_socket
+    depends_on:
+      - db
+    expose:
+      - 3000
+    ports:
+      - 3000:3000
+  db:
+    image: postgres:alpine
+    container_name: postgres
+    env_file:
+      - ../backend/.env
+    restart: always
+    volumes:
+      - db_volumes:/var/lib/postgresql/data
+    networks:
+      - vue_nest_socket
+    expose:
+      - 5432
+networks:
+  vue_nest_socket:
+    driver: bridge
+volumes:
+  db_volumes:
+    name: test_db_volumes
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /home/${USER}/test/data/postgresql/
+  uploads_volumes:
+    name: test_uploads_volumes
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /home/${USER}/test/data/upload/

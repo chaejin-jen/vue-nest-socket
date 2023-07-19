@@ -15,8 +15,8 @@
   </div>
   <body>
     <WS v-if="selected == 1" />
-    <SIO v-if="selected == 2" />
-    <SIONS v-if="selected == 3" />
+    <SIO v-else-if="selected == 2" />
+    <SIONS v-else-if="selected == 3" />
     
   </body>
 </template>
@@ -27,7 +27,7 @@ import WS from '@/components/connect/WebSocket.vue'
 import SIO from '@/components/connect/SocketIO.vue'
 import SIONS from '@/components/connect/SocketIONamespace.vue'
 
-const selected = ref(3)
+const selected = ref(2)
 console.log(selected)
 
 onUpdated(() => {

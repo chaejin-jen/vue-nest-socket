@@ -6,6 +6,6 @@
     <br />
     <RouterLink to="/chat/channel2">channel2</RouterLink>
     <br />
-    <RouterLink to="/chat/channel3">channel3</RouterLink>
+    <RouterLink to="/chat/channel3">channel333</RouterLink>
   </main>
 </template>
